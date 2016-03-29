@@ -114,8 +114,18 @@ myapp.config(function($routeProvider, $locationProvider){
   .when('/reciply/uploads',{
     templateUrl : 'upload.html',
     controller : function ($scope) {
-
-    }
+        // -------->
+        $scope.directive("ngFileSelect",function(){
+            return {
+                link: function($scope,el){
+                    el.bind("change", function(e){
+                        $scope.file = (e.srcElement || e.target).files[0];
+                        $scope.getFile();
+                    })
+                }
+            }
+        }
+        // <--------
   })
   .otherwise({
     templateUrl: 'reciplemini.html',
@@ -164,3 +174,21 @@ myapp.controller('mainController',function($scope,$http, $window) {
     $scope.userislogin = false;
   };
 });
+
+// -------->
+var UploadController = function ($scope, fileReader) {
+     console.log(fileReader)
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+        .then(function(result) {
+            $scope.imageSrc = result;
+        });
+    };
+
+    $scope.$on("fileProgress", function(e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+    });
+
+};
+// <--------
