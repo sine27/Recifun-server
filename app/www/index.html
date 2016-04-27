@@ -23,10 +23,11 @@
 				<h1><a href="/">ReciFun</a></h1>
 				<nav class="main">
 					<ul>
-						<li class="search">
+						<li class="search" ng-controller="SearchController">
 							<a class="fa-search" href="#search">Search</a>
-							<form id="search" method="get" action="#">
-								<input type="text" name="query" placeholder="Search" />
+							<form id="search" ng-submit="searchAll()" >
+								<input type="text" name="query" placeholder="Search" ng-model="searchkey" >
+
 							</form>
 						</li>
 						<li class="menu">
@@ -47,12 +48,12 @@
 									<div ng-show = "userislogin">
 										<p>{{ profile.nickname }}</p>
 										<p>{{ profile.email}}</p>
-										<img ng-src={{profile.picture}} style="width:100px;height:100px;">
+										<img ng-src={{profile.picture}} style="width:100px;height:100px;" width="100%">
 									</div>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a href="#editprofile">
 									<h3>Edit Profile</h3>
 									<p>Personal information, edit allowed</p>
 								</a>
@@ -64,23 +65,23 @@
 								</a>
 							</li>
 							<li>
-								<a href="#">
-									<h3>My recipes</h3>
+								<a href="#myRecipe">
+									<h3>My Uploads</h3>
 									<p>The recipes uploaded by yourself</p>
 								</a>
 							</li>
 							<li>
-								<a href="#">
+								<a href="#myFavorite">
 									<h3>Favorite</h3>
-									<p>The recipes you saved</p>
+									<p>The recipes you liked</p>
 								</a>
 							</li>
-							<li>
+							<!-- <li>
 								<a href="#">
 									<h3>Message</h3>
 									<p>Notification, commands, etc.</p>
 								</a>
-							</li>
+							</li> -->
 						</ul>
 					</section>
 				</div>
@@ -89,7 +90,7 @@
 				<section ng-show = "!userislogin">
 					<ul class="actions vertical">
 					<!-- Login -->
-						<form id="login" ng-submit="submit()" ng-controller = "loginController">
+						<form id="login" ng-submit="submit()" ng-controller="loginController">
 							<div id="loginTextField">
 								<input type="text" name="demo-name" id="demo-name" required ng-model="username" placeholder="Username" />
 								</br>
@@ -151,6 +152,8 @@
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/angular/app.js"></script>
 		<link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<script src="assets/js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+		<script src="assets/js/ng-file-upload.min.js"></script>
 
 	</body>
 </html>

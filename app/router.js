@@ -78,6 +78,8 @@ module.exports = function(app,passport) {
 
   app.get('/api/reciply/:_id',middleware.reciply.getOne);
   app.get('/api/reciplys',middleware.reciply.getall);
+  app.post('/api/myReciplys',middleware.reciply.getMine);
+  app.post('/api/reciplySearch',middleware.reciply.searchAll);
 
   app.patch('/api/reciply',middleware.isAuthenticated,middleware.reciply.update);
 
@@ -94,4 +96,15 @@ module.exports = function(app,passport) {
   app.get('/api/islogin',middleware.islogin);
 
   app.get('/api/profile',middleware.profile.get);
+
+  app.patch('/api/profile',middleware.isAuthenticated,middleware.profile.update);
+
+  app.post('/api/like',middleware.isAuthenticated,middleware.favorite.create);
+  app.post('/api/unlike',middleware.isAuthenticated,middleware.favorite.remove);
+  app.post('/api/liked',middleware.isAuthenticated,middleware.favorite.liked);
+  app.post('/api/myFavorites',middleware.isAuthenticated,middleware.favorite.getFavorites);
+
+  app.post('/api/comment',middleware.isAuthenticated,middleware.comment.create);
+  app.post('/api/deleteComment',middleware.isAuthenticated,middleware.comment.remove);
+  app.post('/api/getComments',middleware.comment.getComments);
 };

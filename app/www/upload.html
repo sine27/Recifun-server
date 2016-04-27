@@ -1,100 +1,87 @@
-<!-- http://plnkr.co/edit/y5n16v?p=preview -->
 
 <article class="post">
-<header>
-	<div class="title">
-		<h2><a href='#' >Create a recipe </a></h2>
-	</div>
-</header>
-
-<h3>Recipe Title</h3>
-<input id="recipe title" type="text" name="title" ng-model="name" placeholder="Recipe Title">
-</br>
-<h3>Recipe Photo</h3>
-<!-- Recipe Photo -->
-<div id="image-preview">
-	<label for="image-upload" id="image-label">Choose File</label>
-	<input id="image upload" type='file' onchange="readURLRI(this);" />
-	<img id="recipeImg" class="image" alt="" width="100%" align="center" />
-</div>
-</br>
-
-<!-- Uplaod video by Youtube Embed -->
-<div>
 	<header>
 		<div class="title">
-			<h2>Vedio URL</h2>
-			<p>Click share under the video. Choose "Enbed" and copy the URL only in the textfeild.</p>
+			<h2><a href='' >Create a recipe </a></h2>
 		</div>
 	</header>
-	<input id="videoURL" type="text" name="title" value="" placeholder="URL in the src = """>
-</div>
-</br>
 
-<div class="upfood clearfix">
-	<div class="foicp pvl clearfix libufo">
+	<form name="recipeDetail" ng-submit="submit()" novalidate>
+		<h3>Recipe Title</h3>
+		<input id="recipe title" type="text" name="name" required ng-model="title" placeholder="Recipe Title*">
+		</br>
+		<h3>Description</h3>
+		<span class="12u$">
+			<textarea onclick="$(this).focus();" name="demo-message" required ng-model="description" placeholder="Description*"></textarea>
+		</span>
+		</br>
+
+		<!-- Uplaod video by Youtube Embed -->
+		<div>
+			<header>
+				<div class="title">
+					<h3>Video URL</h3>
+					<p>Click share under the video. Paste the URL here.</p>
+				</div>
+			</header>
+			<input id="video" type="text" name="title" value="" ng-model="video" placeholder='URL'>
+		</div>
+		</br>
+
 		<!-- ingradient table -->
-		<div class="ingredient table">
+		<div id="ingredient table" ng-controller="IngredientController">
 			<section>
-				<h3>Ingradients</h3>
-				<div class="row uniform">
+				<header>
+					<div class="title">
+						<h3>Ingradients</h3>
+						<p>Please rember to confirm all ingredients! You need to write at least 1 ingredient!</p>
+					</div>
+				</header>
+				<div class="row uniform" ng-repeat ="ingredient in ingredients track by $index" ng-model="ingredients">
 					<div id="ingredient-name" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Gradient name" />
+							<input type="text" required ng-model="ingredient.name" value="" placeholder="Ingredient*" />
 					</div>
 					<div id="ingredient-quantity" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Quantity" />
+							<input type="text" required ng-model="ingredient.quantity" value="" placeholder="Quantity*" />
 					</div>
-					<div id="ingredient-name" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Gradient name" />
-					</div>
-					<div id="ingredient-quantity" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Quantity" />
-					</div>
-					<div id="ingredient-name" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Gradient name" />
-					</div>
-					<div id="ingredient-quantity" class="6u 12u$(xsmall)">
-							<input type="text" name="demo-name" id="demo-name" value="" placeholder="Quantity" />
-					</div>
-					<div class="adlan">
-						<a class="button small" href="javascript:void(0);" tabindex="-1" id="zhuliao" style="display:block;">add more</a>
-					</div>
+					<a  ng-click="remove(ingredient, $index)">remove</a>
+					<a  ng-click="addOne(ingredients, $index)" ng-show="$last">Confirm Ingredients</a>
+				</div>
+				</br>
+				<div style="display:block;">
+					 <button class="button small" ng-click="addOneIng($index)" tabindex="-1">Add ingredient</button>
 				</div>
 			</section>
 		</br>
 		</div>
+
 		<!-- step -->
-		<div>
-			<div>
-				<h3>Steps</h3>
-					<span>Step 1</span>
-						<div>
-
-
-							<div id="image-preview">
-								<label for="image-upload" id="image-label">Choose File</label>
-								<input id="image upload" type='file' onchange="readURL(this);" />
-								<img id="step1" class="image" alt="" width="100%" align="center" />
-							</div>
-							<div><button class="remove image" id="remove image1" onclick="removeImage()">Remove</button></div>
-						</br>
-						</div>
-						<span class="12u$">
-							<textarea onclick="$(this).focus();" name="demo-message" id="demo-message"></textarea>
-						</span>
-					</li>
-				</ul>
+		<div ng-controller="StepController">
+			<header>
+				<div class="title">
+					<h3>Steps</h3>
+					<p>Please rember to confirm all steps! You need to write at least 1 step!</p>
+				</div>
+			</header>
+			<div ng-repeat="step in steps track by $index" ng-model="steps">
+				<span class="12u$">
+					<textarea onclick="$(this).focus();" required ng-model="step.detail" placeholder="Step Detail*"></textarea>
+				</span>
+				<div class="row uniform">
+					<a ng-click="remove(step, $index)">remove</a>
+					<a ng-click="addOne(steps)" ng-show="$last">Confirm steps</a>
+				</div>
 				</br>
 			</div>
+			<div style="display:block;">
+				 <a class="button small"  ng-click="addOneStep($index)" tabindex="-1" id="addBuZhou">Add step</a>
+			</div>
+			</br>
 		</div>
-		<div style="display:block;">
-			 <a class="button small"  href="javascript:void(0);" tabindex="-1" id="addBuZhou">Add more steps</a>
-		</div>
-		</br>
-	</div>
-</div>
-<div>
-	<button class="button large" id="upload" >Upload</button>
-	<button class="button large" id="cancel" >Cancel</button>
-</div>
+		<input type="submit" class="button large" id="upload">
+		<button class="button large" id="cancel" ng-click="cancel()">Cancel</button>
+		<span ng-show="submitted && recipeDetail.$invalid">&nbsp;&nbsp;&nbsp;Please fill all required fields.</span>
+		<!-- Sidebar -->
+		<section id="sidebar"></section>
+	</form>
 </article>
